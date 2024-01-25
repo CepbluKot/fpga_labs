@@ -1,6 +1,3 @@
-
-
-
 module counter 
 # (parameter max = 3)
 (	input logic clk, reset, 
@@ -23,7 +20,6 @@ begin
 	end
 end						
 endmodule
-
 
 module counter_mod_for_fsm
 # (parameter max = 3)
@@ -53,7 +49,6 @@ endmodule
 
 
 
-
 module counter_for_state
 # (parameter max = 3)
 (	input logic clk,
@@ -72,7 +67,6 @@ begin
 	end
 end						
 endmodule
-
 
 
 module prescaler
@@ -102,7 +96,6 @@ module prescaler
 		end
 	end
 endmodule
-
 
 
 
@@ -137,7 +130,6 @@ module multiplexer_6
 endmodule
 
 
-
 module multiplexer_3
 
  (	input logic [3:0] in0, 
@@ -167,68 +159,6 @@ module multiplexer_3
 	endcase
 	end
 endmodule
-
-
-/*
-
-module finitestatemiachine (input logic clk, reset,
-					output logic[6:0] data_out,
-					output logic[3:0] digit_out
-					);
-					
-			
-		
-		logic[6:0]	green_light_out_decoded;
-		logic[6:0]	yellow_light_out_decoded;
-		logic[6:0]	red_light_out_decoded;
-		
-		
-		
-		logic reset_out;
-		logic clk_out;
-		assign reset_out = ~reset;
-		assign clk_out = ~clk;
-		
-		prescaler #(5000000 ) prescaler_counter_flick (clk_out, reset_out, clk_out_flickr_counter);
-		prescaler #(50000000 ) prescaler_counter_main (clk_out, reset_out, clk_out_prescaler_counter);
-		
-		prescaler #(50000) prescaler_mults (clk_out, reset_out, clk_out_prescaler_for_mults);
-		
-		
-		logic [1:0] digit;
-		counter #(3) cnt_3(clk_out_prescaler_for_mults, reset_out, digit);
-		
-		
-		
-		
-		
-		always_ff
-		begin	
-		case(clk_out_flickr_counter)
-		
-		1'b0: begin
-			red_light_out_decoded = 7'b1111111 ;
-			yellow_light_out_decoded = 7'b1111111 ;	
-			green_light_out_decoded = 7'b1000000;
-		end
-		
-		1'b1: begin
-			red_light_out_decoded = 7'b1111111 ;
-			yellow_light_out_decoded = 7'b1111111 ;	
-			green_light_out_decoded = 7'b1111111 ;
-		end
-		
-		endcase
-		end
-		
-		multiplexer_6 mult_1  (green_light_out_decoded, yellow_light_out_decoded, red_light_out_decoded, digit, data_out);
-		multiplexer_3 mult_2  (4'b1110 , 4'b1101 , 4'b1011 , digit, digit_out);
-
-	
-	
-endmodule
-
-*/
 
 
 module finitestatemiachine (input logic clk, reset, press_for_next_state,
@@ -281,7 +211,6 @@ module finitestatemiachine (input logic clk, reset, press_for_next_state,
 					yellow_light_out_decoded = 7'b1000000 ;
 					green_light_out_decoded = 7'b1111111 ;
 
-
 				end
 				2'b10: begin
 				
@@ -321,7 +250,6 @@ module finitestatemiachine (input logic clk, reset, press_for_next_state,
 endmodule
 
 
-
 module decoder_7seg (input logic[3:0] data_in,
 							input logic[1:0] digit_in,
 							output logic[6:0] data_out,
@@ -341,23 +269,6 @@ module decoder_7seg (input logic[3:0] data_in,
 			2'h2: digit_out = 4'b1011 ;
 			2'h3: digit_out = 4'b0111 ;
 			default: digit_out = 4'b0000 ;
-		endcase
-	end
-							
-endmodule
-
-
-
-module states_switch_logic (input logic[1:0] previous_state,
-									output logic[1:0] next_state
-							);
-	always_ff
-	begin
-		case(previous_state)
-			2'b00: next_state = 2'b01;
-			2'b01: next_state = 2'b10;
-			2'b10: next_state = 2'b11;
-			2'b11: next_state = 2'b00;
 		endcase
 	end
 							
